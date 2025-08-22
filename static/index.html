@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioPy - Sistema de Biblioteca</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 25px;
+        }
+        .stats-card {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="display-4 text-white mb-3">📚 BiblioPy</h1>
+                    <p class="lead text-white-50">Sistema de Biblioteca - Projeto para Portfólio</p>
+                </div>
+
+                <!-- Status Card -->
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">✅ Status do Sistema</h5>
+                        <p class="card-text">FastAPI + SQLAlchemy + Pydantic funcionando perfeitamente!</p>
+                        <div id="status-indicator" class="badge bg-success fs-6">Online</div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card stats-card text-center">
+                            <div class="card-body">
+                                <h3 id="total-books">0</h3>
+                                <p class="mb-0">Total de Livros</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card text-center">
+                            <div class="card-body">
+                                <h3 id="available-books">0</h3>
+                                <p class="mb-0">Livros Disponíveis</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card text-center">
+                            <div class="card-body">
+                                <h3 id="borrowed-books">0</h3>
+                                <p class="mb-0">Livros Emprestados</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card text-center">
+                            <div class="card-body">
+                                <h3 id="total-users">0</h3>
+                                <p class="mb-0">Total de Usuários</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Endpoints -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">🔗 Endpoints da API</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>📖 Livros</h6>
+                                <ul class="list-unstyled">
+                                    <li><code>GET /books/</code> - Listar livros</li>
+                                    <li><code>POST /books/</code> - Criar livro</li>
+                                    <li><code>GET /books/{id}</code> - Buscar livro</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>👥 Usuários</h6>
+                                <ul class="list-unstyled">
+                                    <li><code>GET /users/</code> - Listar usuários</li>
+                                    <li><code>POST /users/</code> - Criar usuário</li>
+                                    <li><code>GET /users/{id}</code> - Buscar usuário</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>📊 Sistema</h6>
+                                <ul class="list-unstyled">
+                                    <li><code>GET /health</code> - Status da API</li>
+                                    <li><code>GET /stats</code> - Estatísticas</li>
+                                    <li><code>GET /docs</code> - Documentação Swagger</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>🏗️ Tecnologias</h6>
+                                <ul class="list-unstyled">
+                                    <li>✅ FastAPI</li>
+                                    <li>✅ SQLAlchemy</li>
+                                    <li>✅ Pydantic</li>
+                                    <li>✅ SOLID Principles</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">⚡ Ações Rápidas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="btn btn-primary w-100 mb-2" onclick="loadStats()">
+                                    📊 Atualizar Estatísticas
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="/docs" class="btn btn-outline-primary w-100 mb-2" target="_blank">
+                                    📖 Ver Documentação
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Carregar estatísticas ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+        });
+
+        // Função para carregar estatísticas
+        async function loadStats() {
+            try {
+                const response = await fetch('/stats');
+                const data = await response.json();
+                
+                document.getElementById('total-books').textContent = data.total_books;
+                document.getElementById('available-books').textContent = data.available_books;
+                document.getElementById('borrowed-books').textContent = data.borrowed_books;
+                document.getElementById('total-users').textContent = data.total_users;
+                
+                document.getElementById('status-indicator').className = 'badge bg-success fs-6';
+                document.getElementById('status-indicator').textContent = 'Online';
+            } catch (error) {
+                document.getElementById('status-indicator').className = 'badge bg-danger fs-6';
+                document.getElementById('status-indicator').textContent = 'Offline';
+                console.error('Erro ao carregar estatísticas:', error);
+            }
+        }
+    </script>
+</body>
+</html>
